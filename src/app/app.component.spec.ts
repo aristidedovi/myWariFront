@@ -7,11 +7,11 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
-      ],
+      ],&a      
       declarations: [
         AppComponent
       ],
-    }).compileComponents();
+    }).compileComponents(); 
   }));
 
   it('should create the app', () => {

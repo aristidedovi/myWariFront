@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-lg-3 col-6">
+      <div class="icon" style="margin-left: 50px; margin-bottom: 10px;">
+          <button mat-mini-fab color="primary" class="btn float-left" style="width: 50px; height: 50px;" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <!-- Main row -->
+  <app-listuser (selectedUser)="selectUser($event)" class="col-lg-4 connectedStortable" [users]="users"></app-listuser>
+  <app-detailuser [user]="selectedUser" class="col-lg-8 connectedStortable" *ngIf="isSelected" ></app-detailuser>
+</div>
+
+
+
