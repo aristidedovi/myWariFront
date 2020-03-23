@@ -1,3 +1,4 @@
+import { JwtinterceptorService } from './helpers/jwtinterceptor.service';
 import { UsersComponent } from './component/users/users/users.component';
 import { AuthentificationService } from './service/authentification.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,14 +22,16 @@ import { ListuserComponent } from './component/users/listuser/listuser.component
 import { ComptesComponent } from './component/comptes/comptes.component';
 import { ProfilComponent } from './component/users/profil/profil.component';
 import { RoutelinkComponent } from './template/routelink/routelink.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginFormComponent } from './component/loginform/loginform.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './component/home/home.component';
 import { DetailuserComponent } from './component/users/detailuser/detailuser.component';
 import { ItemuserComponent } from './component/users/itemuser/itemuser.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { AdduserComponent } from './component/users/adduser/adduser.component';
+import { EdituserComponent } from './component/users/edituser/edituser.component';
+import { ToastrModule } from 'ngx-toastr';  
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +47,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UsersComponent,
     DetailuserComponent,
     ItemuserComponent,
+    AdduserComponent,
+    EdituserComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
     MatCardModule,
     MatProgressSpinnerModule,
@@ -67,8 +72,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatTableModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    ToastrModule.forRoot({ 
+      closeButton: true,
+      progressBar: true,
+    })  
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtinterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

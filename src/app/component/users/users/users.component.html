@@ -1,14 +1,112 @@
-<div class="row">
-  <div class="col-lg-3 col-6">
-      <div class="icon" style="margin-left: 50px; margin-bottom: 10px;">
-          <button mat-mini-fab color="primary" class="btn float-left" style="width: 50px; height: 50px;" class="btn btn-primary"><i class="fa fa-plus"></i></button>
-    </div>
+<div class="row" *ngIf="!isLoadingUser">
+  <div  class="col-lg-12 connectedStortable">
+    <p>
+      <mat-spinner style="margin:0 auto;"
+      mode="indeterminate" color="blue"></mat-spinner>
+    </p>
   </div>
 </div>
+<div class="row" *ngIf="isLoadingUser">
+  <div class="col-12 col-sm-6 col-md-3" >
+    <div class="info-box">
+      <a routerLink="/users/add">
+        <button mat-mini-fab color="primary" class="btn float-left" style="width: 60px; height: 60px;" class="btn btn-success"><i class="fa fa-plus"></i></button>
+      </a>
+      <div class="info-box-content">
+        <span class="info-box-text">NOUVEAU USER</span>
+        <span class="info-box-number">
+          Formulaire
+        </span>
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+  <!-- /.col -->
+  <div class="col-12 col-sm-6 col-md-3">
+    <div class="info-box mb-3">
+      <a routerLink="/users/list">
+        <button mat-mini-fab color="primary" class="btn float-left" style="width: 60px; height: 60px;" class="btn btn-success"><i class="fa fa-users"></i></button>
+      </a>
+
+      <div class="info-box-content">
+        <span class="info-box-text">Liste users</span>
+        <span class="info-box-number">Liste - Detail</span>
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+  <!-- /.col -->
+
+  <!-- fix for small devices only -->
+  <div class="clearfix hidden-md-up"></div>
+
+  <div class="col-12 col-sm-6 col-md-3">
+    <div class="info-box mb-3">
+      <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+      <div class="info-box-content">
+        <span class="info-box-text">Sales</span>
+        <span class="info-box-number">760</span>
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+  <!-- /.col -->
+  <div class="col-12 col-sm-6 col-md-3">
+    <div class="info-box mb-3">
+      <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+      <div class="info-box-content">
+        <span class="info-box-text">New Members</span>
+        <span class="info-box-number">2,000</span>
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+</div>
+
+
+<!--<div class="row">
+  <div class="col-lg-3 col-6">
+      <div class="icon" style="margin-left: 50px; margin-bottom: 10px;" *ngIf="router.url === '/users/list'">
+        <a routerLink="/users/add">
+          <button mat-mini-fab color="primary" class="btn float-left" style="width: 50px; height: 50px;" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+        </a>
+      </div>
+        <div class="icon" style="margin-left: 50px; margin-bottom: 10px;" *ngIf="router.url === '/users/add'">
+        <a routerLink="/users/list">
+          <button mat-mini-fab color="yellow" class="btn float-left" style="width: 50px; height: 50px;" class="btn btn-warning"><i class="fa fa-plus"></i></button>
+        </a>
+    </div>
+  </div>
+</div>-->
 <div class="row">
   <!-- Main row -->
-  <app-listuser (selectedUser)="selectUser($event)" class="col-lg-4 connectedStortable" [users]="users"></app-listuser>
-  <app-detailuser [user]="selectedUser" class="col-lg-8 connectedStortable" *ngIf="isSelected" ></app-detailuser>
+  <div class="col-lg-4" *ngIf="router.url === '/users/list' || router.url === '/users/detail'">
+    <app-listuser (selectedUser)="selectUser($event)"  class="col-lg-4 connectedStortable" [users]="users"></app-listuser>
+  </div>
+
+  <div class="col-lg-8" *ngIf="router.url === '/users/detail'" >
+    <div  class="col-lg-12 connectedStortable" *ngIf="!isLoading">
+      <p>
+        <mat-spinner style="margin:0 auto;"
+        mode="indeterminate" color="blue"></mat-spinner>
+      </p>
+    </div>
+
+    <app-detailuser [user]="selectedUser" class="col-lg-8 connectedStortable" *ngIf="isSelected && isLoading" ></app-detailuser>
+  </div>
+
+</div>
+<div class="row" *ngIf="router.url === '/users/add'">
+  <app-adduser  class="col-lg-12 connectedStortable"[roles]="roles" ></app-adduser>
+</div>
+<div class="row" *ngIf="router.isActive('/users/edit',false)">
+  <app-adduser class="col-lg-12 connectedStortable" [roles]="roles"></app-adduser>
 </div>
 
 

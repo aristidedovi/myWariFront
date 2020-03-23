@@ -2,12 +2,18 @@
   <div class="login-box">
     <!-- /.login-logo -->
      <div class="card">
-       <div class="card-body login-card-body">
+       <div class="card-body login-card-body" *ngIf="!loading">
          <p class="login-box-msg">Sign in to start your session</p>
-
+         <div class="alert alert-danger"  *ngIf="errorMessage">
+           {{ errorMessage.error.message }}
+           <em *ngIf="errorMessage.error.code === 401" >Contactez l'admin</em>
+         </div>
+         <div class="alert alert-danger"  *ngIf="loginForm.errors">
+          {{ loginForm.errors }}
+        </div>
          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
            <div class="input-group mb-3">
-             <input type="text" class="form-control" placeholder="Username" formControlName="username">
+             <input type="text" class="form-control" placeholder="Username" formControlName="username" required>
              <div class="input-group-append">
                <div class="input-group-text">
                  <span class="fas fa-envelope"></span>
@@ -33,7 +39,7 @@
              </div>
              <!-- /.col -->
              <div class="col-4">
-               <button type="submit" class="btn btn-primary btn-block" >Sign In</button>
+               <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.valid">Sign In</button>
              </div>
              <!-- /.col -->
            </div>
@@ -60,6 +66,12 @@
          </p>
        </div>
        <!-- /.login-card-body -->
+       <div class="card-body text-center"  *ngIf="loading">
+        <p>
+          <mat-spinner style="margin:0 auto;" 
+          mode="indeterminate" color="blue"></mat-spinner>
+        </p>
+      </div>
      </div>
    </div>
    <!-- /.login-box -->

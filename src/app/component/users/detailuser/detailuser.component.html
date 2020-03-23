@@ -1,5 +1,5 @@
 
-    <div class="card">
+    <div class="card" >
       <div class="card-header">
         <h3 class="card-title">Detail utilisateur</h3>
          <div class="card-tools">
@@ -18,24 +18,26 @@
                      alt="User profile picture">
               </div>
 
-              <h3 class="profile-username text-center">{{ user.username }}</h3>
+              <h3 class="profile-username text-center">{{ user.firstname }} {{user.lastname}}</h3>
 
-              <p class="text-muted text-center">Software Engineer</p>
+              <p class="text-muted text-center"> ( {{ user.roles }} )</p>
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Followers</b> <a class="float-right">1,322</a>
+                  <b>Téléphone</b> <a class="float-right">{{ user.telephone }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Following</b> <a class="float-right">543</a>
+                  <b>Email </b> <a class="float-right">{{ user.email }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Friends</b> <a class="float-right">13,287</a>
+                  <b>Date de creation</b> <a class="float-right">{{ user.createdAt | date }}</a>
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Modifier</b></a>
-              <a href="#" class="btn btn-danger btn-block"><b>Supprimer</b></a>
+              <a [routerLink]="['/users/edit', user.id ]" class="btn btn-success btn-block"><b>Modifier</b></a>
+              <a *ngIf="!user.isActive" (click)="onDesactived(user)" class="btn btn-warning btn-block"><b style="color: white;">Debloquer</b></a>
+              <a *ngIf="user.isActive"  (click)="onDesactived(user)" class="btn btn-secondary btn-block"><b style="color: white;">Bloquer</b></a>
+              <a *ngIf="this.currentUser.roles[0] === 'ROLE_SUPER_ADMIN_SYSTEME'"  (click)="onDelete(user)" class="btn btn-danger btn-block"><b style="color: white;">Supprimer</b></a>
             </div>
             <!-- /.card-body -->
           </div>

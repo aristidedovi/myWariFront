@@ -3,7 +3,7 @@
       <div class="card-header">
         <h3 class="card-title">Liste des utilisateurs</h3>
         <div class="card-tools">
-          <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">{{ dataSource.data.length }}</span>
+          <span data-toggle="tooltip" title="3 total users" class="badge badge-primary">{{ dataSource.data.length }}</span>
           <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>
           </button>
@@ -12,30 +12,51 @@
           <mat-label>Recherche</mat-label>
           <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
         </mat-form-field>
-          
       </div>
       <!-- /.card-header -->
       <div class="card-body text-center"  *ngIf="loading">
         <p>
-          <mat-spinner style="margin:0 auto;" 
-          mode="indeterminate" color="accent"></mat-spinner>
+          <mat-spinner style="margin:0 auto;"
+          mode="indeterminate" color="blue"></mat-spinner>
         </p>
       </div>
       <div class="card-body mat-elevation-z8" *ngIf="!loading">
         <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" >
-        
           <!-- Position Column -->
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef> Profil </th>
             <td mat-cell *matCellDef="let element">
+              <i *ngIf="!element.isActive"  class="fa fa-lock" style="color: red;"></i>
               <img class="direct-chat-img" src="assets/img/user1-128x128.jpg" alt="message user image">
               </td>
           </ng-container>
           <!-- Name Column -->
-          <ng-container matColumnDef="name">
+      <!--    <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element">  </td>
+          </ng-container>-->
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Username </th>
             <td mat-cell *matCellDef="let element"> {{element.username}} </td>
           </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="detail">
+            <th mat-header-cell *matHeaderCellDef> Detail </th>
+            <td mat-cell *matCellDef="let element"><button class="btn btn-warning"><i class="fa fa-eye"></i></button>
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="choice" >
+            <th mat-header-cell *matHeaderCellDef>choice</th>
+              <td mat-cell *matCellDef="let element">
+                <i class="fa fa-chevron-right" *ngIf="selectedUsers!= null && element.username === selectedUsers.username"></i>
+              </td>
+          </ng-container>
+
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>

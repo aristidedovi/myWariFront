@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,17 +21,19 @@ export class AuthentificationService {
 
   login(user: User){
     return this.http.post<User>(environment.apiUrl+'/login_check', user).pipe(
-      map(user => {
-        if(user && user.token){
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+      map(data => {
+        if(data && data.token){
+          //console.log('data user', data)
+          localStorage.setItem('currentUser', JSON.stringify(data));
+          this.currentUserSubject.next(data);
         }
-        return user;
+        return data;
       })
     );
   }
 
   public get currentUserValue(): User {
+    //console.log('CurrentUserSubject', this.currentUserSubject)
     return this.currentUserSubject.value;
   }
 

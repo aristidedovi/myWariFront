@@ -1,7 +1,7 @@
 import { User } from './../../models/user';
 import { AuthentificationService } from './../../service/authentification.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -14,6 +14,8 @@ export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   returnUrl: string;
   logged: boolean = false;
+  loading = false;
+  errorMessage;
 
   constructor(
     private authentifiaction: AuthentificationService,
@@ -29,8 +31,8 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      username: new FormControl(),
-      password: new FormControl(),
+      username: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.required),
     });
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -39,19 +41,28 @@ export class LoginFormComponent implements OnInit {
 
   onSubmit(){
 
-    const user:User = {
+
+    this.loading = true;
+
+    const user: User = {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password
     }
+
     const link = ['/home'];
     this.authentifiaction.login(user).subscribe(
       data => {
+
         console.warn(data);
         this.logged = true;
         this.router.navigate(link);
       },
       error => {
-        console.warn('Erreur lors de la connexion verifier votre connexion et réssayer');
+        setTimeout(() =>{
+          this.loading = false;
+        }, 1000);
+        this.errorMessage = error;
+        //console.warn(error);
       });
   }
 }
