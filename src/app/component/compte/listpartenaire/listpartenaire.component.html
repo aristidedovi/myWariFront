@@ -1,0 +1,67 @@
+
+    <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Liste des partenaires</h3>
+          <div class="card-tools">
+            <span data-toggle="tooltip" title="3 total users" class="badge badge-primary">{{ partenairelist.length }}</span>
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+          </div><br><br>
+          <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-search text-blue"
+                aria-hidden="true"></i></div>
+            </div>
+            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="on" placeholder="Recherche">
+          </div>
+          <!--<mat-form-field>
+            <mat-label>Recherche</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+          </mat-form-field>-->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body text-center"  *ngIf="loading">
+          <p>
+            <mat-spinner style="margin:0 auto;"
+            mode="indeterminate" color="blue"></mat-spinner>
+          </p>
+        </div>
+        <div class="card-body mat-elevation-z8" *ngIf="!loading">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let partenaire of partenairelist | paginate: { itemsPerPage: 5, currentPage: c } | filter:searchText; let i = index;">
+            <div class="row">
+              <div class="col-4">
+                Ninea : {{ partenaire.ninea }} 
+                <i *ngIf="!partenaire.isActive"  class="fa fa-lock" style="color: red;"></i>
+              </div>
+              <div class="col-4">
+                <button type="button" class="btn btn-block btn-outline-primary btn-xs">
+                  modifier
+                </button>
+                <button  (click)="deletePartenaire(partenaire,i)" type="button" class="btn btn-block btn-outline-danger btn-xs">
+                  supprimer
+                </button>
+              </div>
+              <div class="col-4">
+                <button type="button" (click)="onRowClicked(partenaire)" [ngClass]="(selectedPartenaire!= null && partenaire.ninea === selectedPartenaire.ninea)?'btn btn-block btn-primary btn-xs':'btn btn-block btn-warning btn-xs'">
+                  compte
+                </button>
+                <button type="button" (click)="activateOrDesactivate(partenaire, i)" [ngClass]="(partenaire.isActive == false)?'btn btn-block btn-outline-primary btn-xs':'btn btn-block btn-outline-danger btn-xs'">
+                  <span *ngIf="!partenaire.isActive" >debloquer</span>
+                  <span *ngIf="partenaire.isActive" >bloquer</span>
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <p></p>
+        <pagination-controls (pageChange)="c = $event"></pagination-controls>
+      </div>
+  
+  
+  
+  
+  
+  
+  

@@ -58,7 +58,7 @@
             -->
             </li>
             <li class="nav-item" *ngIf="currentUser.roles != 'ROLE_CAISSIER_SYSTEME'" >
-              <a routerLink="/users" class="nav-link" routerLinkActive="active">
+              <a routerLink="/users/list" class="nav-link" routerLinkActive="active">
                 <i class="nav-icon fas fa-book"></i>
                 <p>
                   Users
@@ -66,8 +66,8 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a routerLink="/comptes" routerLinkActive="active" class="nav-link">
+            <li class="nav-item" *ngIf="currentUser.roles != 'ROLE_CAISSIER_SYSTEME'">
+              <a routerLink="/partenaires/list" routerLinkActive="active" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
                   Comptes

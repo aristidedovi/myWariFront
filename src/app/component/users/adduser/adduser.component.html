@@ -19,7 +19,7 @@
                     <div class="col-lg-6">
                         <div class="card-body">
                             <div class="row">
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-lg-12">
                                     <label for="exampleInputEmail1" style="width: 100%;">Nom <em style="color: red; size: 2px;">*</em>
                                       <!--<div *ngIf="isSubmited" style="display: inline;">
                                         <em *ngIf="userForm.controls['lastname'].errors.required" style="color: red; size: 2px;">Name is required.</em>
@@ -27,7 +27,7 @@
                                     </label>
                                     <input type="text" class="form-control" placeholder="Entrer votre nom" formControlName="lastname" required>
                                   </div>
-                                  <div class="form-group col-lg-6">
+                                  <div class="form-group col-lg-12">
                                     <label for="exampleInputPassword1">Prenom  <em style="color: red; size: 2px;">*</em>
                                       <!--<div *ngIf="isSubmited" style="display: inline;">
                                         <em *ngIf="userForm.controls['firstname'].errors.required" style="color: red; size: 2px;">Prenom is required.</em>
@@ -37,7 +37,7 @@
                                   </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-lg-12">
                                     <label for="exampleInputEmail1">Email  <em style="color: red; size: 2px;">*</em>
                                       <!--<div *ngIf="isSubmited" style="display: inline;">
                                         <em *ngIf="userForm.controls['email'].errors.required" style="color: red; size: 2px;">email is required.</em>
@@ -45,7 +45,7 @@
                                     </label>
                                     <input type="mail" class="form-control" placeholder="Entrer votre Email"  formControlName="email" required>
                                   </div>
-                                  <div class="form-group col-lg-6">
+                                  <div class="form-group col-lg-12">
                                     <label for="exampleInputPassword1">Télépĥone EX: +221....... <em style="color: red; size: 2px;">*</em>
                                       <!--<div *ngIf="isSubmited" style="display: inline;">
                                         <em *ngIf="userForm.controls['telephone'].errors.required" style="color: red; size: 2px;">téléphone is required.</em>
@@ -54,21 +54,6 @@
                                     <input type="text" class="form-control" placeholder="Entrer votre téléphone"  formControlName="telephone">
                                   </div>
                             </div>
-
-
-                              <div class="form-group">
-                                <label for="exampleInputFile">Image de profil</label>
-                                <div class="input-group">
-                                  <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Choisir une image</label>
-                                  </div>
-                                  <div class="input-group-append">
-                                    <span class="input-group-text" id="">Charger</span>
-                                  </div>
-                                </div>
-                              </div>
-
                             <!--<div class="form-check">
                               <input type="checkbox" class="form-check-input" id="exampleCheck1">
                               <label class="form-check-label" for="exampleCheck1">Check me out</label>
@@ -85,37 +70,50 @@
                               </label>
                               <select class="form-control" id="exampleInputPassword1" formControlName="role">
                                 <option [ngValue]="null" disabled>Choisir un role</option>
-                                <option *ngFor="let item of roles" [selected]="item.libelle === userForm.controls['role'].value.libelle"  [ngValue]="item">
+                                <option *ngIf="isUpdate"  [selected]="userUpdate.role"  [ngValue]="userUpdate.role">{{ userUpdate.role.libelle }}</option>
+                                <option *ngFor="let item of roles" [ngValue]="item">
                                   {{ item.libelle }}
                                 </option>
                               </select>
                             </div>
+
                             <div class="form-group">
-                              <label for="exampleInputEmail1">*Un identifiant sera crée automatiquement
+                              <label for="exampleInputFile">Image de profil</label>
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input type="file" class="custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Choisir une image</label>
+                                </div>
+                                <div class="input-group-append">
+                                  <span class="input-group-text" id="">Charger</span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="form-group" *ngIf="isUpdate">
+                              <label for="exampleInputEmail1">Identifiant
                                 <!--<div *ngIf="isSubmited" style="display: inline;">
                                   <em *ngIf="userForm.controls['username'].errors.required" style="color: red; size: 2px;">username is required.</em>
                                 </div>-->
                               </label>
                               <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Générer automatiquent"  formControlName="username" disabled>
                             </div>
-                            <div class="form-group" *ngIf="!isUpdate">
-                              <label for="exampleInputPassword1">*Mot de passe sera crée automatiquement
+                            <div class="form-group" *ngIf="isUpdate">
+                              <label for="exampleInputPassword1">Modifier le mot de passe
                                <!-- <div *ngIf="isSubmited" style="display: inline;">
                                   <em *ngIf="userForm.controls['password'].errors.required" style="color: red; size: 2px;">password is required.</em>
                                 </div>-->
                               </label>
-                              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Entrer votre mot de passe"  formControlName="password" disabled>
+                              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Entrer votre mot de passe"  formControlName="password">
                             </div>
                           </div>
                     </div>
                 </div>
-
               <!-- /.card-body -->
-
               <div class="card-footer">
                 <div class="text-center">
-                    <button type="submit" *ngIf="!isUpdate" class="btn btn-primary text-center">Enregistrer</button>
-                    <button type="submit" *ngIf="isUpdate"  class="btn btn-primary text-center" [disabled]="!userForm.valid" >Modifier</button>
+                    <button type="submit" *ngIf="!isUpdate" class="btn btn-primary text-center" [disabled]="!userForm.valid || isSubmited" >Enregistrer</button>
+                    <button type="submit" *ngIf="isUpdate"  class="btn btn-primary text-center" [disabled]="!userForm.valid || isSubmited" >Modifier</button>
                 </div>
               </div>
             </form>

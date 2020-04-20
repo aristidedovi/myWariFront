@@ -25,18 +25,18 @@ export class SidebarComponent implements OnInit {
     private userService: UsersService,
   ) {
     this.userTokenDecode = jwt_decode(this.authentificationservice.currentUserValue.token);
+  }
+
+  ngOnInit() {
     this.userService.getUserByUsername(this.userTokenDecode.username).subscribe(
       data => {
         this.currentUser = data;
-        console.log('Current User', this.currentUser);
+       // console.log('Current User', this.currentUser);
       },
       error => {
         console.warn('Erreur lors de la connexion verifier votre connexion et réssayer');
       }
     )
-  }
-
-  ngOnInit() {
     this.url1 = this.location.path();
     console.log(this.url1);
   }

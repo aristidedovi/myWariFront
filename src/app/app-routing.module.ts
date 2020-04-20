@@ -1,3 +1,7 @@
+import { ListpartenaireComponent } from './component/compte/listpartenaire/listpartenaire.component';
+import { AddcompteComponent } from './component/compte/addcompte/addcompte.component';
+import { ListcompteComponent } from './component/compte/listcompte/listcompte.component';
+import { ComptesComponent } from './component/compte/comptes/comptes.component';
 import { UserGuard } from './helpers/user.guard';
 import { ProfilComponent } from './component/users/profil/profil.component';
 import { EdituserComponent } from './component/users/edituser/edituser.component';
@@ -19,9 +23,18 @@ const routes: Routes = [
   {path: 'users', component: UsersComponent,
   children: [
     { path: 'list', component: ListuserComponent},
-    { path: 'detail', component: ListuserComponent},
-    { path: 'edit/:userId', component: AdduserComponent},
-    { path: 'add', component: AdduserComponent}
+    { path: 'list/detail/delete', component: UsersComponent},
+    { path: 'list/detail', component: DetailuserComponent},
+    { path: 'list/edit/:userId', component: AdduserComponent},
+    { path: 'list/add', component: AdduserComponent}
+  ], canActivate: [UserGuard]},
+  {path: 'partenaires', component: ComptesComponent,
+  children: [
+    { path: 'list', component: ListcompteComponent},
+    { path: 'list/comptes', component: ComptesComponent},
+    { path: 'list/comptes/detail', component: ComptesComponent},
+    { path: 'list/edit/:userId', component: AddcompteComponent},
+    { path: 'list/add', component: AddcompteComponent}
   ], canActivate: [UserGuard]},
 
   //otherwise redirect to home

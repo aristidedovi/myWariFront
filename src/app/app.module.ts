@@ -19,7 +19,7 @@ import { NavbarComponent } from './template/navbar/navbar.component';
 import { SidebarComponent } from './template/sidebar/sidebar.component';
 import { FooterComponent } from './template/footer/footer.component';
 import { ListuserComponent } from './component/users/listuser/listuser.component';
-import { ComptesComponent } from './component/comptes/comptes.component';
+import { ComptesComponent } from './component/compte/comptes/comptes.component';
 import { ProfilComponent } from './component/users/profil/profil.component';
 import { RoutelinkComponent } from './template/routelink/routelink.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -31,7 +31,13 @@ import { ItemuserComponent } from './component/users/itemuser/itemuser.component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdduserComponent } from './component/users/adduser/adduser.component';
 import { EdituserComponent } from './component/users/edituser/edituser.component';
-import { ToastrModule } from 'ngx-toastr';  
+import { ToastrModule } from 'ngx-toastr';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { AddcompteComponent } from './component/compte/addcompte/addcompte.component';
+import { ListcompteComponent } from './component/compte/listcompte/listcompte.component';
+import { ListpartenaireComponent } from './component/compte/listpartenaire/listpartenaire.component';
+import { DetailcompteComponent } from './component/compte/detailcompte/detailcompte.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +55,10 @@ import { ToastrModule } from 'ngx-toastr';
     ItemuserComponent,
     AdduserComponent,
     EdituserComponent,
+    AddcompteComponent,
+    ListcompteComponent,
+    ListpartenaireComponent,
+    DetailcompteComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +85,9 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({ 
       closeButton: true,
       progressBar: true,
-    })  
+    }),
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
   ],
   providers: [
     {

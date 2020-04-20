@@ -1,10 +1,9 @@
-import { UsersService } from './../../../service/users.service';
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { UsersService } from 'src/app/service/users.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
 import { AuthentificationService } from 'src/app/service/authentification.service';
 import * as jwt_decode from 'jwt-decode';
-import { ListuserComponent } from '../listuser/listuser.component';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -14,13 +13,44 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DetailuserComponent implements OnInit {
 
+  /**
+   * @var User
+   * @Input user pour recevoir le user selectionner dans la listuser.component
+   */
   @Input() user: User;
-  @Input() detail;
-  @Input() isSelected;
+
+  //@Input() detail;
+  //@Input() isSelected;
+  /**
+   * @var Booleen
+   * Verifier si l'utilisateur es sectionner
+   */
+  isSelected = false;
+
+  /**
+   * @var User
+   * Utilisateur connecter
+   */
   currentUser: User;
+  /**
+   * @var Booleen
+   * Verifier si c'est un superadmin
+   */
   isSuperAdmin = false;
+
+  /**
+   * @var Booleen
+   * Verifier si le spinne se charge
+   */
   loading = false;
-  listUser: ListuserComponent;
+
+  /**
+   * @var Booleen
+   */
+  isDisabled = false;
+
+
+  //@ViewChild(ListuserComponent, {static: false}) userComponent: ListuserComponent;
 
   constructor(
     private userService: UsersService,
@@ -33,17 +63,23 @@ export class DetailuserComponent implements OnInit {
 
    }
 
-
   ngOnInit() {
+    if(this.user != null){
+        setTimeout(() =>{
+          this.loading = true;
+        }, 1000);
+        this.isSelected = true;
 
+    }
   }
 
   onDelete(user){
-    const link = ['/users'];
+    const link = ['/users/list/detail/delete'];
     this.userService.deleteUser(user.id).subscribe(
       data => {
         console.log('Supression', data);
         this.toastr.success('User ' + user.username + ' à été supprimer', 'Success');
+        this.isSelected = false;
         this.router.navigate(link);
       },
       error => {
@@ -53,13 +89,22 @@ export class DetailuserComponent implements OnInit {
   }
 
   onDesactived(user){
-    const link = ['/users'];
-    user.isActive = !user.isActive;
-    console.log(user);
+    this.isDisabled = true;
+    this.isSelected = false;
+    const link = ['/users/list'];
+    let info;
+   // user.isActive = !user.isActive;
+    if (user.isActive === true) {
+      info = 'bloqué';
+      user.isActive = false;
+    } else {
+      info = 'débloqué';
+      user.isActive = true;
+    }
     this.userService.updateUser(user, user.id).subscribe(
       data => {
-        //console.log('bloquer', data);
-        this.toastr.success('User ' + user.username + ' à été désactivé', 'Success');
+        this.toastr.success('User ' + data.username + ' à été ' + info + ' avec success');
+        this.user = data;
         this.router.navigate(link);
       },
       error => {
@@ -67,8 +112,4 @@ export class DetailuserComponent implements OnInit {
       }
     )
   }
-
-
-
-
 }

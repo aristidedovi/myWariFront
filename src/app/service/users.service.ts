@@ -47,7 +47,7 @@ export class UsersService {
   }
 
   updateUser(user: User, id: number): Observable<User>{
-    console.log('user update', user);
+    //console.log('user update', user);
     return this.http.put<User>(environment.apiUrl + '/api/users/' + id, user).pipe(
       map(data => data),
       retry(1),

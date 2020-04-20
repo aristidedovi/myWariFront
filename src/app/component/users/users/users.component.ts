@@ -1,8 +1,8 @@
 import { map } from 'rxjs/operators';
 import { UsersService } from './../../../service/users.service';
-import { Component, OnInit, ViewChild, AfterViewInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { User } from 'src/app/models/user';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, Event } from '@angular/router';
 import { ListuserComponent } from '../listuser/listuser.component';
 
 @Component({
@@ -12,14 +12,36 @@ import { ListuserComponent } from '../listuser/listuser.component';
 })
 export class UsersComponent implements OnInit {
 
+  /**
+   * @var any[]
+   * Tableau des utilisateur
+   */
   users: any = [];
+  /**
+   * @var any[]
+   * Tableau des roles
+   */
   roles: any = [];
+  /**
+   * @var User 
+   * Pour l'utilisateur selectionner
+   */
   selectedUser: User;
+  /**
+   * @var Boleen 
+   * Pour verifier si l'utilisateur est sélectionner
+   */
   isSelected = false;
+  /**
+   * @var Boleen 
+   * Pour controler le chargement du spinner
+   */
   isLoading;
+  /**
+   * @var Boleen 
+   * Pour controler le chargement du spinner
+   */
   isLoadingUser;
-
-  //@ViewChild(ListuserComponent, {static: false}) list: ListuserComponent;
 
   constructor(
     public router: Router,
@@ -28,49 +50,34 @@ export class UsersComponent implements OnInit {
 
    }
 
-
-  /* loadChild(){
-     setTimeout(
-       () => this.list.ngOnInit(),0
-     )
-   }*/
-
   ngOnInit() {
     this.isSelected = false;
     this.isLoading = true;
-    setTimeout(() =>{
-      this.isLoadingUser = true;
-    }, 1000);
-    
-
-    this.loadUser();
-    //this.loadChild()
     this.loadRole();
   }
 
-  loadUser(){
-    // const users: User = [];
-     return this.usersService.getUsers().subscribe((data) => {
-      this.users = data;
-      console.log("Initialisation",this.users);
-     });
-   }
-
-   loadRole(){
+  /**
+   * Chargement des roles depuis l'API
+   */
+   loadRole() {
      return this.usersService.getRoles().subscribe((data) => {
        this.roles = data;
        console.log('les roles : ', this.roles);
      })
    }
 
+
+  /**
+   * @params User
+   * Envoie de l'utilisateur senectionner depuis la liste users
+   */
   selectUser(user) {
     this.selectedUser = user;
     setTimeout(() =>{
       this.isLoading = true;
-    }, 1000);
+    }, 1);
     this.isLoading = false;
     this.isSelected = true;
-    console.log('select user :', this.selectedUser);
   }
 
 }

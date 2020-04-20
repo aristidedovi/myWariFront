@@ -1,5 +1,10 @@
-
-    <div class="card" >
+    <div  class="col-lg-12 connectedStortable" *ngIf="!loading && isSelected">
+      <p>
+        <mat-spinner style="margin:0 auto;"
+        mode="indeterminate" color="blue"></mat-spinner>
+      </p>
+    </div>
+    <div class="card" *ngIf="isSelected && loading" >
       <div class="card-header">
         <h3 class="card-title">Detail utilisateur</h3>
          <div class="card-tools">
@@ -34,9 +39,9 @@
                 </li>
               </ul>
 
-              <a [routerLink]="['/users/edit', user.id ]" class="btn btn-success btn-block"><b>Modifier</b></a>
-              <a *ngIf="!user.isActive" (click)="onDesactived(user)" class="btn btn-warning btn-block"><b style="color: white;">Debloquer</b></a>
-              <a *ngIf="user.isActive"  (click)="onDesactived(user)" class="btn btn-secondary btn-block"><b style="color: white;">Bloquer</b></a>
+              <a [routerLink]="['/users/list/edit', user.id ]" class="btn btn-success btn-block"><b>Modifier</b></a>
+              <button (click)="onDesactived(user)" [ngClass]="(!user.isActive) ? 'btn btn-primary' : 'btn btn-warning'" class="btn-block"><b *ngIf="!user.isActive"  style="color: white;">Debloquer</b><b  *ngIf="user.isActive" style="color: white;">Bloquer</b></button>
+              <!--<a *ngIf="user.isActive"  (click)="onDesactived(user)"  [disabled]="isDisabled" class="btn btn-secondary btn-block"><b style="color: white;">Bloquer</b></a>-->
               <a *ngIf="this.currentUser.roles[0] === 'ROLE_SUPER_ADMIN_SYSTEME'"  (click)="onDelete(user)" class="btn btn-danger btn-block"><b style="color: white;">Supprimer</b></a>
             </div>
             <!-- /.card-body -->

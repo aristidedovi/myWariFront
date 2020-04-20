@@ -1,8 +1,7 @@
 import { Router } from '@angular/router';
-import { UsersComponent } from './../users/users.component';
 import { User } from './../../../models/user';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { UsersService } from 'src/app/service/users.service';
 
@@ -12,18 +11,45 @@ import { UsersService } from 'src/app/service/users.service';
   styleUrls: ['./listuser.component.css']
 })
 export class ListuserComponent implements OnInit {
-  title = 'Users';
+  /**
+   * @var USer[]
+   * variable lié à users dans users.component
+   */
   @Input() users: User[];
-  @Input() user: User;
-  selectedUsers: User;
-  dataSource;
-  usersData: any = [];
-  loading = true;
-  @Output() selectedUser = new EventEmitter();
-  displayedColumns: string[] = ['position', 'weight', 'detail', 'choice'];
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(UsersComponent, {static: true}) userComponent: UsersComponent;
+  /**
+   * @var any[]
+   * Liste des utilisateurs de la base de données
+   */
+  userslist: any = [];
+
+  //@Input() user: User;
+  /**
+   * @var User
+   * Mettre en évidence l'utilisateur selectionner
+   */
+  selectedUsers: User;
+
+  //dataSource = new MatTableDataSource();
+  //usersData: any = [];
+
+  /**
+   * @var booleen
+   * Chargement spinner de la liste
+   */
+  loading = true;
+  /**
+   * @var any
+   * Variable de recherche
+   */
+  searchText;
+  /**
+   * @var EventEmitter
+   * @Output pour envoyer l'utilisateur selectionner au user.component et au detail.component
+   */
+  @Output() selectedUser = new EventEmitter();
+  //displayedColumns: string[] = ['position', 'weight', 'detail'];
+  //@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
 
   constructor(
@@ -31,47 +57,58 @@ export class ListuserComponent implements OnInit {
     private userService: UsersService,
   ) {
 
+
+  }
+
+
+  /**
+   * @Params User
+   * Emmission de l'utilisateur selectionner au users.component et au detal.component
+   */
+  onRowClicked(row) {
+    // console.log('row ',row)
+     this.selectedUsers = row;
+     this.selectedUser.emit(
+       row
+     );
+     this.router.navigate(['/users/list/detail/']);
    }
 
   ngOnInit() {
-   // this.displayedColumns = ['position', 'name'];
-    setTimeout(() =>{
+    this.selectedUser.emit(null);
+    setTimeout(() => {
       this.loading = false;
     }, 1000);
+
     this.userService.getUsers().subscribe((data) => {
-      this.usersData = data;
-      this.dataSource = new MatTableDataSource(this.usersData);
-     // console.log("Initialisation",this.users);
+      this.userslist  = data;
      });
 
+   // console.log("Initialisation",this.users);
+   // this.dataSource.data = this.users;
+   // this.dataSource.paginator = this.paginator;
+   // this.displayedColumns = ['position', 'name'];
+   /* this.dataSource = new MatTableDataSource([]);
+    this.userService.getUsers().subscribe((data) => {
+      while (this.usersData.length === 0) {
+        setTimeout(() => {
+          this.loading = false;
+        }, 1000);
+        this.usersData = data;
+      }
+      if (this.usersData.length > 0) {
+        this.dataSource = new MatTableDataSource(this.usersData);
+      }
+     });
     this.selectedUsers = null;
-    this.dataSource.paginator = this.paginator;
+    */
   }
 
-  loadUser(){
-    // const users: User = [];
-     return this.userService.getUsers().subscribe((data) => {
-      this.usersData = data;
-     // console.log("Initialisation",this.users);
-     });
-   }
 
-  applyFilter(event: Event) {
+ /* applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  }*/
 
-  onRowClicked(row) {
-    return this.userService.getUserByUsername(row.username).subscribe(( data ) => {
-      this.selectedUsers = data;
-      this.selectedUser.emit(
-        this.selectedUsers
-      );
-      this.router.navigate(['/users/detail']);
-     });
-
-      //this.router.navigate(['detail'])
-      //console.log('le row est: ', row);
-  }
 
 }
