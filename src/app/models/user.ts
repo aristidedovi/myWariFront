@@ -11,5 +11,6 @@ export class User {
   id?: number;
   isActive?: boolean;
   createdAt?: Date;
+  partenaire?: any;
 }
 

@@ -103,6 +103,15 @@ export class AdduserComponent implements OnInit {
       // console.log(params.userId);
       }
     );
+    this.userService.getUserByUsername(this.currentUser.username).subscribe(
+      data => {
+        this.currentUser = data;
+        console.log('Current User', this.currentUser);
+      },
+      error => {
+        console.warn('Erreur lors de la connexion verifier votre connexion et réssayer');
+      }
+    )
 
     /*this.userService.getRoles().subscribe(
       data => {
@@ -174,13 +183,18 @@ export class AdduserComponent implements OnInit {
    */
   createNewUser() {
     const role = '/api/roles/' + this.userForm.value.role.id;
+    let partenaireId = null;
+    if (this.currentUser.roles[0] === 'ROLE_PARTENAIRE' || this.currentUser.roles[0] === 'ROLE_ADMIN_PARTENAIRE' ){
+      partenaireId = '/api/partenaires/' + this.currentUser.partenaire.id;
+    }
     const user: User = {
       firstname: this.userForm.value.firstname,
       lastname: this.userForm.value.lastname,
       telephone: this.userForm.value.telephone.toString(),
       email: this.userForm.value.email,
       role: role,
-      roles: [this.userForm.value.role.libelle]
+      roles: [this.userForm.value.role.libelle],
+      partenaire: partenaireId
     }
     this.userService.addUser(user).subscribe(
       data => {
