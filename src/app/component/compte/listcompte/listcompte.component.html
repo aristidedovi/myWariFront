@@ -1,55 +1,129 @@
-
-    <div class="card" *ngIf="isSelectedPartenaire">
-        <div class="card-header">
-          <h3 class="card-title">Liste des comptes de {{ partenaire.ninea }}</h3>
-          <div class="card-tools">
-            <span data-toggle="tooltip" title="3 total users" class="badge badge-primary">{{ comptelist.length }}</span>
-            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-              <i class="fas fa-minus"></i>
+<div
+    class="card"
+    *ngIf="isSelectedPartenaire"
+>
+    <div class="card-header">
+        <h3 class="card-title">
+            Liste des comptes de {{ partenaire.ninea }}
+        </h3>
+        <div class="card-tools">
+            <span
+                data-toggle="tooltip"
+                title="3 total users"
+                class="badge badge-primary"
+            >
+                {{ comptelist.length }}
+            </span>
+            <button
+                type="button"
+                class="btn btn-tool"
+                data-card-widget="collapse"
+            >
+                <i class="fas fa-minus"></i>
             </button>
-          </div><br><br>
-          <div class="input-group mb-2 mr-sm-2">
+        </div>
+        <br>
+        <br>
+        <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
-              <div class="input-group-text"><i class="fas fa-search text-blue"
-                aria-hidden="true"></i></div>
+                <div class="input-group-text">
+                    <i
+                        class="fas fa-search text-blue"
+                        aria-hidden="true"
+                    ></i>
+                </div>
             </div>
-            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="on" placeholder="Recherche">
-          </div>
-          <!--<mat-form-field>
+            <input
+                class="form-control"
+                type="text"
+                name="search"
+                [(ngModel)]="searchText"
+                autocomplete="on"
+                placeholder="Recherche"
+            >
+        </div>
+        <!-- <mat-form-field>
             <mat-label>Recherche</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
-          </mat-form-field>-->
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body text-center"  *ngIf="loading">
-          <p>
-            <mat-spinner style="margin:0 auto;"
-            mode="indeterminate" color="blue"></mat-spinner>
-          </p>
-        </div>
-        <div class="card-body mat-elevation-z8" *ngIf="!loading">
+          </mat-form-field> -->
+    </div>
+    <!-- /.card-header -->
+    <div
+        class="card-body text-center"
+        *ngIf="loading"
+    >
+        <p>
+            <mat-spinner
+                style="margin:0 auto;"
+                mode="indeterminate"
+                color="blue"
+            ></mat-spinner>
+        </p>
+    </div>
+    <div
+        class="card-body mat-elevation-z8"
+        *ngIf="!loading"
+    >
         <ul class="list-group">
-          <li class="list-group-item" *ngFor="let item of comptelist | filter:searchText">
-            <div class="row">
-              <div class="col-4">
-                <img class="direct-chat-img" src="assets/img/user1-128x128.jpg" alt="message user image">
-                <i class="fa fa-user" style="color: blue;"></i>
-              </div>
-              <div class="col-5">
-                {{ item.numero }}
-              </div>
-              <div class="col-2">
-                <button (click)="onRowClicked(item)" class="btn btn-warning"><i class="fa fa-eye"></i></button>
-              </div>
+            <div *ngFor="let userPartenaire of partenaire.users">
+                <li
+                    class="list-group-item"
+                    style="background-color: blue;"
+                    *ngIf="userPartenaire.roles[0] == 'ROLE_PARTENAIRE'"
+                >
+                    <div class="row">
+                        <div class="col-4">
+                            <img
+                                class="direct-chat-img"
+                                src="assets/img/user1-128x128.jpg"
+                                alt="message user image"
+                            >
+                            <i
+                                *ngIf="!userPartenaire.isActive"
+                                class="fa fa-lock"
+                                style="color: red;"
+                            ></i>
+                        </div>
+                        <div class="col-5">
+                            <span style="color: white;">{{ userPartenaire.username }}</span>
+                        </div>
+                        <div class="col-2">
+                            <button
+                                (click)="onRowClickedUser(userPartenaire)"
+                                class="btn btn-warning"
+                            >
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
             </div>
-          </li>
+            <p></p>
+            <span>Les comptes</span>
+            <li
+                class="list-group-item"
+                *ngFor="let item of comptelist | filter:searchText"
+            >
+                <div class="row">
+                    <div class="col-4">
+                        <i
+                            class="fa fa-file-invoice-dollar"
+                            style="font-size: 60px;"
+                        ></i>
+                    </div>
+                    <div class="col-5">{{ item.numero }}</div>
+                    <div class="col-2">
+                        <button
+                            (click)="onRowClicked(item)"
+                            class="btn btn-warning"
+                        >
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
         </ul>
         <p></p>
-      </div>
-  
-  
-  
-  
-  
-  
-  
+    </div>
+
+</div>

@@ -1,4 +1,4 @@
-<!---<div class="row">
+<!-- -<div class="row">
     <div class="col-12 col-sm-6 col-md-3" >
       <div class="info-box">
         <a routerLink="/comptes/list/add">
@@ -43,10 +43,9 @@
         </div>
       </div>
     </div>
-  </div>
--->
-  
-  <!--<div class="row">
+  </div> -->
+
+<!-- <div class="row">
     <div class="col-lg-3 col-6">
         <div class="icon" style="margin-left: 50px; margin-bottom: 10px;" *ngIf="router.url === '/users/list'">
           <a routerLink="/users/add">
@@ -59,45 +58,93 @@
           </a>
       </div>
     </div>
-  </div>-->
-  <div class="row">
-      <div class="col-lg-3 col-6">
+  </div> -->
+<div class="row">
+    <div class="col-lg-3 col-6">
         <a routerLink="/partenaires/list/add">
-            <button type="button" class="btn btn-block btn-outline-primary">Nouveau compte</button>
+            <button
+                type="button"
+                class="btn btn-block btn-outline-primary"
+            >
+                Nouveau compte
+            </button>
         </a>
-      </div>
-      <div class="col-lg-5 col-6" *ngIf="router.url === '/partenaires/list/comptes' || router.url === '/partenaires/list/comptes/detail' && isSelectedPartenaire">
-        <button type="button" class="btn btn-block btn-outline-primary">Nouveau compte pour le partenaire {{ selectedOnePartenaire.ninea }}</button>
-      </div>
-  </div>
-  <div class="row">
-      <!-- Main row -->
-      <div class="col-lg-4" *ngIf="router.url === '/partenaires/list' || router.url === '/partenaires/list/comptes' || router.url === '/partenaires/list/comptes/detail'">
-       <app-listpartenaire (selectedOnePartenaire)="selectPartenaire($event)"  class="col-lg-4 connectedStortable" ></app-listpartenaire>
-      </div>
-        
-    <div class="col-lg-4" *ngIf="router.url === '/partenaires/list/comptes' || router.url === '/partenaires/list/comptes/detail' && isSelectedPartenaire" >
-        <app-listcompte [partenaire]="selectedOnePartenaire" (selectedOneCompte)="selectCompte($event)" class="col-lg-8 connectedStortable"  ></app-listcompte>
+    </div>
+    <div
+        class="col-lg-5 col-6"
+        *ngIf="router.url === '/partenaires/list/comptes' || router.url === '/partenaires/list/comptes/detail' || router.url === '/partenaires/list/comptes/detail/user' && isSelectedPartenaire"
+    >
+        <button
+            type="button"
+            class="btn btn-block btn-outline-primary"
+        >
+            Nouveau compte pour le partenaire {{ selectedOnePartenaire.ninea }}
+        </button>
+    </div>
+</div>
+<div class="row">
+    <!-- Main row -->
+    <div
+        class="col-lg-4"
+        *ngIf="router.url === '/partenaires/list' || router.url === '/partenaires/list/comptes' || router.url === '/partenaires/list/comptes/detail' || router.url === '/partenaires/list/comptes/detail/user'"
+    >
+        <app-listpartenaire
+            (selectedOnePartenaire)="selectPartenaire($event)"
+            class="col-lg-4 connectedStortable"
+        ></app-listpartenaire>
+    </div>
+
+    <div
+        class="col-lg-4"
+        *ngIf="router.url === '/partenaires/list/comptes' || router.url === '/partenaires/list/comptes/detail' || router.url === '/partenaires/list/comptes/detail/user' && isSelectedPartenaire"
+    >
+        <app-listcompte
+            [partenaire]="selectedOnePartenaire"
+            (selectedOneCompte)="selectCompte($event)"
+            (selectedOneUser)="selectUser($event)"
+            class="col-lg-8 connectedStortable"
+        ></app-listcompte>
     </div>
     <!-- Main row -->
-    <!--<div class="col-lg-4" *ngIf="router.url === '/users/list' || router.url === '/users/detail'">
+    <!-- <div class="col-lg-4" *ngIf="router.url === '/users/list' || router.url === '/users/detail'">
   
       <app-listuser (selectedUser)="selectUser($event)" class="col-lg-4 connectedStortable" [users]="users"></app-listuser>
       *ngIf="router.url === '/users/detail'"
-    </div>-->
-  
-    <div class="col-lg-4" *ngIf="router.url === '/partenaires/list/comptes/detail' && isSelectedCompte">
-      <app-detailcompte [compte]="selectedOneCompte" class="col-lg-8 connectedStortable"  ></app-detailcompte>
+    </div> -->
+
+    <div
+        class="col-lg-4"
+        *ngIf="router.url === '/partenaires/list/comptes/detail' && isSelectedCompte"
+    >
+        <app-detailcompte
+            [compte]="selectedOneCompte"
+            class="col-lg-8 connectedStortable"
+        ></app-detailcompte>
     </div>
-  
-  </div>
-  <div class="row" *ngIf="router.url === '/partenaires/list/add'">
-    <app-addcompte class="col-lg-12 connectedStortable" [roles]="roles"></app-addcompte>
-  </div>
-  <div class="row" *ngIf="router.isActive('/comptes/list/edit',false)">
+
+    <div
+        class="col-lg-4"
+        *ngIf="router.url === '/partenaires/list/comptes/detail/user' && isSelectedUser"
+    >
+        <app-detailuser
+            [user]="selectedOneUser"
+            class="col-lg-8 connectedStortable"
+        ></app-detailuser>
+    </div>
+
+</div>
+<div
+    class="row"
+    *ngIf="router.url === '/partenaires/list/add'"
+>
+    <app-addcompte
+        class="col-lg-12 connectedStortable"
+        [roles]="roles"
+    ></app-addcompte>
+</div>
+<div
+    class="row"
+    *ngIf="router.isActive('/comptes/list/edit',false)"
+>
     Modification
-  </div>
-  
-  
-  
-  
+</div>

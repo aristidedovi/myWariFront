@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { UsersService } from 'src/app/service/users.service';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { UsersService } from "src/app/service/users.service";
 
 @Component({
-  selector: 'app-comptes',
-  templateUrl: './comptes.component.html',
-  styleUrls: ['./comptes.component.css']
+  selector: "app-comptes",
+  templateUrl: "./comptes.component.html",
+  styleUrls: ["./comptes.component.css"],
 })
 export class ComptesComponent implements OnInit {
   isSelected;
@@ -17,36 +17,39 @@ export class ComptesComponent implements OnInit {
   selectedOnePartenaire: any;
   isSelectedPartenaire = false;
   selectedOneCompte: any;
+  selectedOneUser: any;
   isSelectedCompte = false;
+  isSelectedUser = false;
   roles: any = [];
 
-
-  constructor(
-    public router: Router,
-    public userService: UsersService,
-  ) { }
+  constructor(public router: Router, public userService: UsersService) {}
 
   ngOnInit() {
     this.isSelectedPartenaire = false;
     this.loadRolePartenaire();
   }
 
-  loadRolePartenaire(){
+  loadRolePartenaire() {
     return this.userService.getRoles().subscribe((data) => {
       this.roles = data;
-    })
+    });
   }
 
-  selectPartenaire(partenaire){
-    console.log('Partenaire select ', partenaire);
+  selectPartenaire(partenaire) {
+    console.log("Partenaire select ", partenaire);
     this.selectedOnePartenaire = partenaire;
     this.isSelectedPartenaire = true;
   }
 
-  selectCompte(compte){
-    console.log('Partenaire select ', compte);
+  selectCompte(compte) {
+    console.log("Partenaire select ", compte);
     this.selectedOneCompte = compte;
     this.isSelectedCompte = true;
   }
 
+  selectUser(user) {
+    console.log("user detail ", user);
+    this.selectedOneUser = user;
+    this.isSelectedUser = true;
+  }
 }
