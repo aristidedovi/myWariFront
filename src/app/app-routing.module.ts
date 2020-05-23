@@ -36,7 +36,7 @@ const routes: Routes = [
     component: ComptesComponent,
     children: [
       { path: "list", component: ListcompteComponent },
-      { path: "list/comptes", component: ComptesComponent },
+      { path: "list/comptes/:ninea", component: ComptesComponent },
       { path: "list/comptes/detail", component: ComptesComponent },
       { path: "list/edit/:userId", component: AddcompteComponent },
       { path: "list/add", component: AddcompteComponent },

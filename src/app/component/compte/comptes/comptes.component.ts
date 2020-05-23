@@ -1,6 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit, SimpleChanges } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
 import { UsersService } from "src/app/service/users.service";
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { CourseDialogComponentComponent } from "../course-dialog-component/course-dialog-component.component";
 
 @Component({
   selector: "app-comptes",
@@ -22,11 +24,38 @@ export class ComptesComponent implements OnInit {
   isSelectedUser = false;
   roles: any = [];
 
-  constructor(public router: Router, public userService: UsersService) {}
+  constructor(
+    public router: Router,
+    public userService: UsersService,
+    private dialog: MatDialog,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.isSelectedPartenaire = false;
     this.loadRolePartenaire();
+  }
+
+  isCompteList() {
+    let ninea = this.route.firstChild.snapshot.paramMap.get("ninea");
+    return this.router.url === "/partenaires/list/comptes/" + ninea;
+  }
+
+  openDialog(ninea) {
+    const dialogConfig = new MatDialogConfig();
+
+    //dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "500px";
+    dialogConfig.closeOnNavigation = true;
+
+    dialogConfig.data = {
+      id: this.selectedOnePartenaire.id,
+      title: "Nouveau compte pour le partenaire " + ninea,
+      ninea: ninea,
+    };
+
+    this.dialog.open(CourseDialogComponentComponent, dialogConfig);
   }
 
   loadRolePartenaire() {

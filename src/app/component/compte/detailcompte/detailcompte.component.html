@@ -1,34 +1,58 @@
-  <div class="card" *ngIf="isSelected" >
+<div
+    class="card"
+    *ngIf="isSelected"
+>
     <div class="card-header">
-      <h3 class="card-title">Detail du compte</h3>
-       <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-          </button>
+        <h3 class="card-title">Detail du compte</h3>
+        <div class="card-tools">
+            <button
+                type="button"
+                class="btn btn-tool"
+                data-card-widget="remove"
+            >
+                <i class="fas fa-times"></i>
+            </button>
         </div>
     </div>
-    <div class="row" style="margin-top: 10px;">
-      <div class="col-md-12">
-                  <!-- About Me Box -->
-                  <div class="card card-primary">
-                    <div class="card-header">
-                      <h3 class="card-title">N° {{ compte.numero}}</h3>
+    <div
+        class="row"
+        style="margin-top: 10px;"
+    >
+        <div class="col-md-12">
+            <!-- About Me Box -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">N° {{ compte.numero}}</h3>
+                </div>
+                <div
+                    class="cart-body"
+                    style="padding:10px;"
+                >
+                    <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item">
+                            <b>Solde</b>
+                            <a class="float-right">
+                                {{ compte.solde | currency:'XOF':'symbol':'3.2-2'}}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Date de creation</b>
+                            <a class="float-right">{{ compte.createAt | date }}</a>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <button
+                            class="btn btn-danger btn-block"
+                            (click)="onDelete(compte)"
+                        >
+                            Delete
+                        </button>
                     </div>
-                    <div class="cart-body" style="padding:10px;">
-                        <ul class="list-group list-group-unbordered mb-3">
-                          <li class="list-group-item">
-                            <b>Solde</b> <a class="float-right">{{ compte.solde | currency:'XOF':'symbol':'3.2-2'}}</a>
-                          </li>
-                          <li class="list-group-item">
-                            <b>Date de creation</b> <a class="float-right">{{ compte.createAt | date }}</a>
-                          </li>
-                        </ul>
-                    </div>
-                    <!-- /.card-body -->
-                  </div>
-                  <!-- /.card -->
-      </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
     </div>
 
-  </div>
-
-
+</div>

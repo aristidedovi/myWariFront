@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { UsersService } from "src/app/service/users.service";
 import { ComptesService } from "src/app/service/comptes.service";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-listcompte",
@@ -26,14 +26,28 @@ export class ListcompteComponent implements OnInit {
   selectedUser: any;
   @Output() selectedOneCompte = new EventEmitter();
   @Output() selectedOneUser = new EventEmitter();
-  constructor(private compteservice: ComptesService, private router: Router) {}
+  //ninea: string;
+  constructor(
+    private compteservice: ComptesService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     console.log("Partenaire", this.partenaire);
     setTimeout(() => {
       this.loading = false;
     }, 1000);
-    this.comptelist = this.partenaire.comptes;
+    //this.ninea = this.route.snapshot.params["ninea"];
+    let ninea = this.route.firstChild.snapshot.paramMap.get("ninea");
+    console.log("ninea ", ninea);
+
+    this.compteservice.getOnePartenaires(ninea).subscribe((data) => {
+      console.log(data);
+      this.comptelist = data.comptes;
+      //this.roles = data;
+    });
+    //this.comptelist = this.partenaire.comptes;
   }
 
   ngOnInit() {

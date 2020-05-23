@@ -31,15 +31,34 @@
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let partenaire of partenairelist | paginate: { itemsPerPage: 5, currentPage: c } | filter:searchText; let i = index;">
             <div class="row">
-              <div class="col-4">
+              <div class="col-8">
                 Ninea : {{ partenaire.ninea }} 
                 <i *ngIf="!partenaire.isActive"  class="fa fa-lock" style="color: red;"></i>
               </div>
               <div class="col-4">
-                <button type="button" class="btn btn-block btn-outline-primary btn-xs">
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-success">Action</button>
+                  <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                    <span class="sr-only">Toggle Dropdown</span>
+                    <div class="dropdown-menu" role="menu">
+                      <a class="dropdown-item" (click)="onRowClicked(partenaire)" >Compte</a>
+                      <a class="dropdown-item" (click)="activateOrDesactivate(partenaire, i)">
+                        <span *ngIf="!partenaire.isActive" >debloquer</span>
+                        <span *ngIf="partenaire.isActive" >bloquer</span>
+                      </a>
+                      <a class="dropdown-item" href="#">Modifier</a>
+                      <a class="dropdown-item" (click)="deletePartenaire(partenaire,i)">Supprimer</a>
+                      <!--<div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Separated link</a>-->
+                    </div>
+                  </button>
+                </div>
+
+                <!--<button type="button" class="btn btn-block btn-outline-primary btn-xs">
                   modifier
                 </button>
-                <button  (click)="deletePartenaire(partenaire,i)" type="button" class="btn btn-block btn-outline-danger btn-xs">
+                <button   type="button" class="btn btn-block btn-outline-danger btn-xs">
                   supprimer
                 </button>
               </div>
@@ -50,7 +69,7 @@
                 <button type="button" (click)="activateOrDesactivate(partenaire, i)" [ngClass]="(partenaire.isActive == false)?'btn btn-block btn-outline-primary btn-xs':'btn btn-block btn-outline-danger btn-xs'">
                   <span *ngIf="!partenaire.isActive" >debloquer</span>
                   <span *ngIf="partenaire.isActive" >bloquer</span>
-                </button>
+                </button>-->
               </div>
             </div>
           </li>

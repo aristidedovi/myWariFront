@@ -72,11 +72,12 @@
     </div>
     <div
         class="col-lg-5 col-6"
-        *ngIf="router.url === '/partenaires/list/comptes' || router.url === '/partenaires/list/comptes/detail' || router.url === '/partenaires/list/comptes/detail/user' && isSelectedPartenaire"
+        *ngIf="isSelectedPartenaire"
     >
         <button
             type="button"
             class="btn btn-block btn-outline-primary"
+            (click)="openDialog(selectedOnePartenaire.ninea)"
         >
             Nouveau compte pour le partenaire {{ selectedOnePartenaire.ninea }}
         </button>
@@ -86,7 +87,7 @@
     <!-- Main row -->
     <div
         class="col-lg-4"
-        *ngIf="router.url === '/partenaires/list' || router.url === '/partenaires/list/comptes' || router.url === '/partenaires/list/comptes/detail' || router.url === '/partenaires/list/comptes/detail/user'"
+        *ngIf="router.url === '/partenaires/list' || isSelectedPartenaire && router.url != '/partenaires/list/add'"
     >
         <app-listpartenaire
             (selectedOnePartenaire)="selectPartenaire($event)"
@@ -96,7 +97,7 @@
 
     <div
         class="col-lg-4"
-        *ngIf="router.url === '/partenaires/list/comptes' || router.url === '/partenaires/list/comptes/detail' || router.url === '/partenaires/list/comptes/detail/user' && isSelectedPartenaire"
+        *ngIf="isCompteList() && isSelectedPartenaire || isSelectedCompte || isSelectedUser"
     >
         <app-listcompte
             [partenaire]="selectedOnePartenaire"
